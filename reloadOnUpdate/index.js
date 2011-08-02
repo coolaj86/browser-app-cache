@@ -8,10 +8,12 @@
     ;
 
   function reload() {
-    try {
-      appCache.swapCache();
-    } catch(e) {
-      // Ignore
+    if (appCache.UPDATEREADY === appCache.status) {
+      try {
+        appCache.swapCache();
+      } catch(e) {
+        // Ignore
+      }
     }
 
     location.reload();
@@ -27,4 +29,6 @@
   };
 
   appCache.on('updateready', reload, false);
+  // if we never `appCache.update()`, this will
+  // only happen on pageload
 }());
